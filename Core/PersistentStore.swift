@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData
+import CoreValue
 
 /// Documentation on how to extend nanaged structs, visit https://github.com/terhechte/corevalue
 
@@ -19,24 +20,32 @@ public class PersistentStore: NSObject {
     var privateContext: NSManagedObjectContext
     public var context: NSManagedObjectContext
     var didFinishSetup = false
+    var storeUrl: URL
     
     private init?(storeFile : String) {
         
         let documstsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
-        let storeUrl = documstsDir?.appendingPathComponent(storeFile)
         
         guard let modelUrl = Bundle.main.url(forResource: storeFile, withExtension: "momd"),
+            let aStoreUrl = documstsDir?.appendingPathComponent(storeFile),
             let model = NSManagedObjectModel.init(contentsOf: modelUrl)
             else {
                 return nil
         }
-        
+        storeUrl = aStoreUrl
         context = NSManagedObjectContext.init(concurrencyType: .mainQueueConcurrencyType)
         privateContext = NSManagedObjectContext.init(concurrencyType: .privateQueueConcurrencyType)
         privateContext.persistentStoreCoordinator = NSPersistentStoreCoordinator.init(managedObjectModel: model)
         context.parent = privateContext
         
         super.init()
+        
+        initialize()
+       
+    }
+    
+    func initialize() {
+        
         weak var weakSelf = self
         
         DispatchQueue.global().async {
@@ -49,7 +58,7 @@ public class PersistentStore: NSObject {
             pragmas["journal_mode"] = "DELETE"
             options[NSSQLitePragmasOption] = pragmas
             do {
-                try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeUrl, options: options)
+                try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: weakSelf?.storeUrl, options: options)
                 weakSelf?.didFinishSetup = true
             } catch let error {
                 print(error)
@@ -70,7 +79,6 @@ public class PersistentStore: NSObject {
                     self.privateContext.perform {
                      
                         do {
-                            
                             try self.privateContext.save()
                         } catch let error {
                             print(error)
@@ -85,7 +93,18 @@ public class PersistentStore: NSObject {
     
     public func clean() -> Void {
         
-        
+        DispatchQueue.global().async {
+            
+            guard let coordinator = self.privateContext.persistentStoreCoordinator,
+                let store = coordinator.persistentStores.first else { return }
+            do {
+                try coordinator.remove(store)
+                
+            } catch let error {
+                print(error.localizedDescription)
+            }
+            self.initialize()
+        }
     }
     
     /*
