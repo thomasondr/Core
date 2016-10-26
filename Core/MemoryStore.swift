@@ -9,11 +9,22 @@
 import Foundation
 import CoreData
 
-public class MemoryStore: NSObject {
+private var global : Any? = nil
+
+class MemoryStore: NSObject, CacheProtocol {
     
-    public static let sharedInstance = MemoryStore(storeFile: "model")!
     
-    public var context: NSManagedObjectContext
+    class func sharedInstance( ) -> MemoryStore {
+        
+        guard let instance = global else {
+            global = MemoryStore(storeFile: "model")!
+            return global as! MemoryStore
+        }
+        
+        return instance as! MemoryStore
+    }
+    
+    var context: NSManagedObjectContext
     
     private init?(storeFile : String) {
         
@@ -28,6 +39,11 @@ public class MemoryStore: NSObject {
         context.persistentStoreCoordinator = NSPersistentStoreCoordinator.init(managedObjectModel: model)
         
         super.init()
+        
+        initialize()
+    }
+    
+    func initialize() -> Void {
         weak var weakSelf = self
         
         DispatchQueue.global().async {
@@ -53,6 +69,22 @@ public class MemoryStore: NSObject {
             } catch let error {
                 print(error)
             }
+        }
+    }
+    
+    public func clean() -> Void {
+        
+        DispatchQueue.global().async {
+            
+            guard let coordinator = self.context.persistentStoreCoordinator,
+                let store = coordinator.persistentStores.first else { return }
+            do {
+                try coordinator.remove(store)
+                
+            } catch let error {
+                print(error.localizedDescription)
+            }
+            self.initialize()
         }
     }
 }

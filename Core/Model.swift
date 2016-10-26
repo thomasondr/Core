@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias JSONDict = Dictionary<AnyHashable,Any>
+public typealias JSONDict = Dictionary<String,Any>
 
 public protocol Model {}
 
@@ -16,17 +16,17 @@ public protocol CacheStoreable {
     
     func encode() -> JSONDict
     
-    func decode(_ : JSONDict?) -> Model
+    func decode(dict : JSONDict) -> Model
 }
 
 public enum JSON {
     
-    case Model(CacheStoreable,JSONDict?)
+    case Model(CacheStoreable,JSONDict)
     case Error(Error)
     
     func parse() throws -> Model {
         switch self {
-        case JSON.Model(let model, let json): return model.decode(json)
+        case JSON.Model(let model, let json): return model.decode(dict: json)
         case JSON.Error(let error): return ErrorModel(error)
         }
     }
@@ -35,7 +35,7 @@ public enum JSON {
         
         switch withData {
         case is JSONDict:
-            self = JSON.Model(model, withData as? JSONDict)
+            self = JSON.Model(model, withData as! JSONDict)
         default:
             self = JSON.Error((withData as? Error)!)
         }

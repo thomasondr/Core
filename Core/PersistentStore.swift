@@ -12,10 +12,19 @@ import CoreData
 import CoreValue
 
 /// Documentation on how to extend nanaged structs, visit https://github.com/terhechte/corevalue
+private var global : Any? = nil
 
-public class PersistentStore: NSObject {
+class PersistentStore: NSObject, CacheProtocol {
     
-    public static let sharedInstance = PersistentStore(storeFile: "model")!
+    class func sharedInstance( ) -> PersistentStore {
+        
+        guard let instance = global else {
+            global = PersistentStore(storeFile: "model")!
+            return global as! PersistentStore
+        }
+        
+        return instance as! PersistentStore
+    }
     
     var privateContext: NSManagedObjectContext
     public var context: NSManagedObjectContext
@@ -41,7 +50,6 @@ public class PersistentStore: NSObject {
         super.init()
         
         initialize()
-       
     }
     
     func initialize() {
@@ -66,7 +74,7 @@ public class PersistentStore: NSObject {
         }
     }
     
-    public func save() -> Void {
+    func save() -> Void {
         if !privateContext.hasChanges && !context.hasChanges {
             return
         }
@@ -91,7 +99,7 @@ public class PersistentStore: NSObject {
         }
     }
     
-    public func clean() -> Void {
+    func clean() -> Void {
         
         DispatchQueue.global().async {
             
@@ -141,7 +149,7 @@ public class PersistentStore: NSObject {
             return _fetchedResultsController!
         }
         
-        let fetchRequest: NSFetchRequest<NSManagedObject> = NSFetchRequest.init(entityName: DateItem.EntityName)
+        let fetchRequest: NSFetchRequest<NSManagedObject> = NSFetchRequest.init(entityName: CacheItem.EntityName)
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
@@ -192,7 +200,7 @@ public class PersistentStore: NSObject {
         case .delete:
             tableView.deleteRows(at: [indexPath!], with: .fade)
             //            case .update:
-        //                self.configureCell(tableView.cellForRow(at: indexPath!)!, withDateItem: anObject as! DateItem)
+        //                self.configureCell(tableView.cellForRow(at: indexPath!)!, withCacheItem: anObject as! CacheItem)
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         default: break

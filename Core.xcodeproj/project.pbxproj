@@ -10,6 +10,8 @@
 		100414751DB826E60092CE2E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1004146B1DB826E60092CE2E /* Core.framework */; };
 		1004147A1DB826E60092CE2E /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100414791DB826E60092CE2E /* CoreTests.swift */; };
 		1004147C1DB826E60092CE2E /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 1004146E1DB826E60092CE2E /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		10410FC81DBFF8A3003569C6 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10410FC71DBFF8A3003569C6 /* CacheService.swift */; };
+		10410FCC1DC006D3003569C6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10410FCB1DC006D3003569C6 /* Cache.swift */; };
 		105C42E11DBCDB570056EA54 /* MemoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105C42E01DBCDB570056EA54 /* MemoryStore.swift */; };
 		106F31F71DBBCCFC00380F3A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106F31F61DBBCCFC00380F3A /* Model.swift */; };
 		106F31FD1DBBF35E00380F3A /* PersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106F31FC1DBBF35E00380F3A /* PersistentStore.swift */; };
@@ -33,6 +35,8 @@
 		100414741DB826E60092CE2E /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		100414791DB826E60092CE2E /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		1004147B1DB826E60092CE2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10410FC71DBFF8A3003569C6 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
+		10410FCB1DC006D3003569C6 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		105C42E01DBCDB570056EA54 /* MemoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStore.swift; sourceTree = "<group>"; };
 		106F31F61DBBCCFC00380F3A /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		106F31FC1DBBF35E00380F3A /* PersistentStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStore.swift; sourceTree = "<group>"; };
@@ -85,8 +89,10 @@
 			isa = PBXGroup;
 			children = (
 				106F31F61DBBCCFC00380F3A /* Model.swift */,
+				10410FCB1DC006D3003569C6 /* Cache.swift */,
 				106F31FC1DBBF35E00380F3A /* PersistentStore.swift */,
 				105C42E01DBCDB570056EA54 /* MemoryStore.swift */,
+				10410FC71DBFF8A3003569C6 /* CacheService.swift */,
 				1004146E1DB826E60092CE2E /* Core.h */,
 				1004146F1DB826E60092CE2E /* Info.plist */,
 			);
@@ -268,6 +274,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				106F31FD1DBBF35E00380F3A /* PersistentStore.swift in Sources */,
+				10410FCC1DC006D3003569C6 /* Cache.swift in Sources */,
+				10410FC81DBFF8A3003569C6 /* CacheService.swift in Sources */,
 				105C42E11DBCDB570056EA54 /* MemoryStore.swift in Sources */,
 				106F31F71DBBCCFC00380F3A /* Model.swift in Sources */,
 			);
