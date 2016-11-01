@@ -45,19 +45,18 @@ public struct CacheService {
     
     let store : CacheProtocol
     
-    public func fetchItems() -> Array<CacheItem>? {
+    public func fetchItems() throws -> Array<CacheItem> {
         
         do {
-            let items: [CacheItem] = try CacheItem.query(store.context, predicate: nil)
+            let items: [CacheItem] = try CacheItem.query(store.context, predicate: nil)        
             return items
         } catch let error {
             print(error.localizedDescription)
-            store.clean()
+            throw error
         }
-        return nil
     }
     
-    public mutating func makeNew(_ data: Data) -> CacheItem? {
+    public mutating func makeNew(_ data: Data) throws -> CacheItem {
         
         let item = CacheItem(objectID: nil, data:data)
 
@@ -69,7 +68,8 @@ public struct CacheService {
         } catch CVManagedStructError.structValueError(let msg) {
             print(msg)
         } catch let e {
-            print(e)            
+            print(e)
+            throw e
         }
         
         store.save()
