@@ -13,8 +13,9 @@
 		1022C4611DC9394200380959 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1022C45D1DC9394200380959 /* CacheService.swift */; };
 		1022C4671DC93F2500380959 /* model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1022C4651DC93F2500380959 /* model.xcdatamodeld */; };
 		105C42E11DBCDB570056EA54 /* MemoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105C42E01DBCDB570056EA54 /* MemoryStore.swift */; };
-		106F31F71DBBCCFC00380F3A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106F31F61DBBCCFC00380F3A /* Model.swift */; };
 		106F31FD1DBBF35E00380F3A /* PersistentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106F31FC1DBBF35E00380F3A /* PersistentStore.swift */; };
+		10EB6EFE1DCD1B2000CAF610 /* CacheProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EB6EFD1DCD1B2000CAF610 /* CacheProtocol.swift */; };
+		10EB6F001DCD1BE600CAF610 /* Cacheable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EB6EFF1DCD1BE600CAF610 /* Cacheable.swift */; };
 		133CE2C1104084409DC10CFD /* Pods_Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A4F4C0CF6149099BF895CF /* Pods_Core.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,8 +39,9 @@
 		1022C45D1DC9394200380959 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		1022C4661DC93F2500380959 /* model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = model.xcdatamodel; sourceTree = "<group>"; };
 		105C42E01DBCDB570056EA54 /* MemoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStore.swift; sourceTree = "<group>"; };
-		106F31F61DBBCCFC00380F3A /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		106F31FC1DBBF35E00380F3A /* PersistentStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStore.swift; sourceTree = "<group>"; };
+		10EB6EFD1DCD1B2000CAF610 /* CacheProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheProtocol.swift; sourceTree = "<group>"; };
+		10EB6EFF1DCD1BE600CAF610 /* Cacheable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cacheable.swift; sourceTree = "<group>"; };
 		A6BC0E0FDD7A96AE4184E4EA /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
 		AB44B9E1EA8FD6C1E778400B /* Pods-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Core/Pods-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		E7A4F4C0CF6149099BF895CF /* Pods_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,9 +91,10 @@
 			isa = PBXGroup;
 			children = (
 				1022C4651DC93F2500380959 /* model.xcdatamodeld */,
-				106F31F61DBBCCFC00380F3A /* Model.swift */,
+				10EB6EFD1DCD1B2000CAF610 /* CacheProtocol.swift */,
 				106F31FC1DBBF35E00380F3A /* PersistentStore.swift */,
 				105C42E01DBCDB570056EA54 /* MemoryStore.swift */,
+				10EB6EFF1DCD1BE600CAF610 /* Cacheable.swift */,
 				1022C45D1DC9394200380959 /* CacheService.swift */,
 				1004146E1DB826E60092CE2E /* Core.h */,
 				1004146F1DB826E60092CE2E /* Info.plist */,
@@ -273,11 +276,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10EB6EFE1DCD1B2000CAF610 /* CacheProtocol.swift in Sources */,
 				106F31FD1DBBF35E00380F3A /* PersistentStore.swift in Sources */,
 				105C42E11DBCDB570056EA54 /* MemoryStore.swift in Sources */,
+				10EB6F001DCD1BE600CAF610 /* Cacheable.swift in Sources */,
 				1022C4671DC93F2500380959 /* model.xcdatamodeld in Sources */,
 				1022C4611DC9394200380959 /* CacheService.swift in Sources */,
-				106F31F71DBBCCFC00380F3A /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
