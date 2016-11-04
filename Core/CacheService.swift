@@ -10,6 +10,38 @@ import Foundation
 import CoreValue
 import CoreData
 
+public enum Cache {
+    
+    case Persistent
+    case Memory
+    
+    func create() -> CacheProtocol {
+        switch self {
+        case Cache.Persistent:
+            return PersistentStore.sharedInstance() as! CacheProtocol
+        case Cache.Memory:
+            return MemoryStore.sharedInstance() as! CacheProtocol
+        }
+    }
+    
+    init(_ persistent: Bool) {
+        
+        if persistent {
+            self = Cache.Persistent
+        } else {
+            self = Cache.Memory
+        }
+    }
+}
+
+protocol CacheProtocol : NSObjectProtocol {
+    
+    var context: NSManagedObjectContext { get }
+    func save() -> Void
+    func clean() -> Void
+    
+}
+
 public struct CacheItem : CVManagedPersistentStruct {
     
     /*
@@ -58,7 +90,7 @@ public struct CacheService {
     
     public mutating func makeNew(_ data: Data) throws -> CacheItem {
         
-        let item = CacheItem(objectID: nil, data:data)
+        let item = CacheItem(objectID:nil, data: data)
 
         do {
             _ = try item.toObject(store.context)
@@ -67,9 +99,9 @@ public struct CacheService {
             print(msg)
         } catch CVManagedStructError.structValueError(let msg) {
             print(msg)
-        } catch let e {
-            print(e)
-            throw e
+        } catch let error {
+            print(error.localizedDescription)
+            throw error
         }
         
         store.save()
@@ -79,6 +111,24 @@ public struct CacheService {
     
     public func save() -> Void {
         store.save()
+    }
+    
+    public func delete(_ cacheItem: CacheItem) throws -> Void {
+        
+        guard let objectID = cacheItem.objectID else {
+            
+            print("Item missing objectID. Was it stored before?")
+            return
+        }
+        
+        do {
+            let object = try store.context.existingObject(with: objectID)
+            store.context.delete(object)
+            save()
+        } catch let err {
+            print(err.localizedDescription)
+            throw err
+        }
     }
     
 }

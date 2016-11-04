@@ -52,7 +52,7 @@ class MemoryStore: NSObject, CacheProtocol {
             do {
                 try coordinator?.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
             } catch let error {
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }
@@ -67,7 +67,7 @@ class MemoryStore: NSObject, CacheProtocol {
             do {
                 try self.context.save()
             } catch let error {
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }

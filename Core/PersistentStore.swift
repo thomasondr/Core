@@ -35,7 +35,8 @@ class PersistentStore: NSObject, CacheProtocol {
         
         let documstsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
         
-        guard let modelUrl = Bundle.main.url(forResource: storeFile, withExtension: "momd"),
+        let bundle = Bundle.init(for: type(of:self))
+        guard let modelUrl = bundle.url(forResource: storeFile, withExtension: "momd"),
             let aStoreUrl = documstsDir?.appendingPathComponent(storeFile),
             let model = NSManagedObjectModel.init(contentsOf: modelUrl)
             else {
@@ -69,7 +70,7 @@ class PersistentStore: NSObject, CacheProtocol {
                 try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: weakSelf?.storeUrl, options: options)
                 weakSelf?.didFinishSetup = true
             } catch let error {
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }
@@ -89,12 +90,12 @@ class PersistentStore: NSObject, CacheProtocol {
                         do {
                             try self.privateContext.save()
                         } catch let error {
-                            print(error)
+                            print(error.localizedDescription)
                         }
                     }
                 }
             } catch let error {
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }
