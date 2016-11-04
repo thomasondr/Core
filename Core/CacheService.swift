@@ -56,7 +56,7 @@ public struct CacheService {
         }
     }
     
-    public mutating func makeNew(_ data: Data) throws -> CacheItem {
+    public mutating func create(_ data: Data) throws -> CacheItem {
         
         let item = CacheItem(objectID:nil, data: data)
 

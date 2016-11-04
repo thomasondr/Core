@@ -43,7 +43,7 @@ public extension Cacheable {
         let data = NSKeyedArchiver.archivedData(withRootObject: json)
         var service = CacheService(withPersistence: Self.persistObjects)
         do {
-            self.cacheItem = try service.makeNew(data)
+            self.cacheItem = try service.create(data)
         } catch let err {
             print(err)
         }
