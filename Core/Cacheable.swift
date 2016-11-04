@@ -16,6 +16,8 @@ public protocol Cacheable {
     
     var cacheItem : CacheItem? { get set }
     
+    static var persistObjects : Bool { get set }
+    
     func encode() -> JSONDict
     
     mutating func decode(dict : JSONDict)
@@ -39,7 +41,7 @@ public extension Cacheable {
     public mutating func saveToCache() -> Void {
         let json = self.encode()
         let data = NSKeyedArchiver.archivedData(withRootObject: json)
-        var service = CacheService(withPersistence: true)
+        var service = CacheService(withPersistence: Self.persistObjects)
         do {
             self.cacheItem = try service.makeNew(data)
         } catch let err {
@@ -49,13 +51,13 @@ public extension Cacheable {
     
     static func fetchItems() throws -> [Cacheable] {
         
-        let service = CacheService(withPersistence: true)
+        let service = CacheService(withPersistence: Self.persistObjects)
         
         do {
             let fetchResults : Array<CacheItem> = try service.fetchItems()
             let cacheable = fetchResults.flatMap({ (cacheItem) -> Cacheable? in
-                let userData = self.init(fromCacheItem: cacheItem)
                 
+                let userData = self.init(fromCacheItem: cacheItem)
                 return userData
             })
             
@@ -72,7 +74,7 @@ public extension Cacheable {
             print("Item wasn't saved before")
             return
         }
-        let service = CacheService(withPersistence: true)
+        let service = CacheService(withPersistence: Self.persistObjects)
         
         do {
             try service.delete(safeCacheItem)
@@ -80,5 +82,5 @@ public extension Cacheable {
             print(error.localizedDescription)
             throw error
         }
-    }
+    }        
 }
